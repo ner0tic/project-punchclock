@@ -1,0 +1,140 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/project-punchclock-punchclock/css/project.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/project-punchclock-user/css/Dashboard/widget.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/project-punchclock-user/css/Dashboard/dashboard.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/project-punchclock-user/css/Dashboard/recent-changes.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/project-punchclock-user/css/Dashboard/invoicing.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/project-punchclock-user/css/Dashboard/allert-center.css') }}" />
+{% endblock %}
+{% block javascripts %}
+  {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="row-fluid" id="content-wrapper">
+        <div id="left-pane" class="span4">
+            <div id="left-pane-wrapper">
+                <ul>
+<!-- User Avatar //-->
+                    <li id="avatar">
+                        <a href="#">
+                            <img src="#" class="avatar" />
+                        </a>
+                    </li>
+<!-- User Name And Primary Group //-->
+                    <li id="username">
+                        <h2>
+                            <a href="#">
+                                {{ user.username }}
+                            </a>
+                        </h2>
+                        <h3>
+                            <a href="#">
+                                {{ user.group }}
+                            </a>
+                        </h3>
+                    </li>
+<!-- Current Active Projects //-->
+                    <li id="current-projects">
+                        <h1>{{ 'current projects' | title }}
+                        <ul class="grid project-items">
+                            {% for project in projects %}
+                            <li class="project-item">
+                                <a href="{{ path( 'punchclock_project_show', with { 'project': project }) }}">
+                                    {{ project.name }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="pager-bar"></div>
+                    </li>
+<!-- Previously Completed Projects //-->
+                    <li id="previous-projects">
+                        <h1>{{ 'previous projects' | title }}
+                        <ul class="grid project-items">
+                            {% for project in projects %}
+                            <li class="project-item">
+                                <a href="{{ path( 'punchclock_project_show', with { 'project': project }) }}">
+                                    {{ project.name }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="pager-bar"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="right-pane" class="span8">
+            <div id="right-pane-wrapper">
+                <ul id="dashboard-items">
+<!-- Alert Center //-->
+                    <li id="alerts-widget" class="widget dashboard-item">
+                        <fieldset id="alerts">
+                            <legend>{{ 'alert center' | title }}</legend>
+                            <div class="widget-content">
+                                <ul id="alert-items">
+                                    {% for msg in alerts %}
+<!-- Alert Center :: {{ msg.type }} //-->
+                                    <li class="alert-item">
+                                        <i class="{{ msg.type }}"></i>
+                                        <p>{{ msg.text }}</p>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="pager-bar"></div>
+                            </div>
+                        </fiedlset>
+                    </li>
+<!-- Recent Changes //-->
+                    <li id="recent-changes-widget" class="widget dashboard-item">
+                        <fieldset id="recent-changes">
+                            <legend>{{ 'recent changes' | title }}</legend>
+                            <div class="widget-content">
+                                <ul io="recent-changes-items">
+                                    {% for change in recent_changes %}
+<!-- Recent Changes :: item //-->
+                                    <li class="recent-changes-item">
+                                        <img src="{{ asset(user.avatar) }}" class="avatar thumbnail" />
+                                        <p>
+                                            <a href="{{ path('punchclock_user_profile', with { 'user' : user } ) }}">
+                                                {{ change.text | capitalize }}
+                                            </a>
+                                        </p>
+                                    </li>
+                                </ul>
+                                <div class="pager-bar"></div>
+                            </div>
+                        </fieldset>
+                    </li>
+<!-- Invoicing //-->
+                    <li id="invoicing-widget" class="widget dashboard-item">
+                        <fieldset id="invoicing">
+                            <legend>{{ 'invoicing' | title }}</legend>
+                            <div class="widget-content">
+                                <ul io="invoicing-items">
+                                    {% for invoice in invoicing %}
+<!-- Invoicing :: item //-->
+                                    <li class="invoice-item">
+                                        <i class="{{ asset(invoice.type) }}"></i>
+                                        <p>
+                                            <a href="{{ path('punchclock_invoicing_action', with {
+                                            'invoice' : invoice,
+                                            'action' : invoice.action }) }}">
+                                                {{ invoice.text | capitalize }}
+                                            </a>
+                                        </p>
+                                    </li>
+                                </ul>
+                                <div class="pager-bar"></div>
+                            </div>
+                        </fieldset>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

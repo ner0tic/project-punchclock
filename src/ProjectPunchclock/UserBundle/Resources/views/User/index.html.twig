@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/projectpunchclockuser/css/user.css') }}" />
+{% endblock %}
+{% block javascripts %}
+  {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="row-fluid" id="content-wrapper">
+    </div>
+{% endblock %}

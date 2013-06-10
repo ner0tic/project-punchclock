@@ -1,0 +1,77 @@
+<?php
+    namespace ProjectPunchclock\PunchclockBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
+use ProjectPunchclock\PunchclockBundle\Entity\Project;
+use ProjectPunchclock\PunchclockBundle\Form\Type\ProjectType;
+
+class ProjectController extends Controller
+{
+    /**
+     * @Route("/projects", name="punchclock_projects")
+     * @Template("ProjectPunchclock\PunchclockBundle:Project:list.html.twig")
+     */
+    public function indexAction()
+    {
+        // get route name/params to decypher data to delimit by
+        $projects = $this->get('doctrine')
+                          ->getRepository('ProjectPunchclockPunchclockBundle:Project');
+
+        if ( !$projects) {
+          throw $this->createNotFoundException('No Projects found.');
+        }
+
+        return array('projects' => $projects);
+    }
+
+    /**
+     * @Route("/{slug}", name="punchclock_project")
+     * @Template("ProjectPunchclock\PunchclockBundle:Project:show.html.twig")
+     */
+    public function showAction($slug)
+    {
+      $project = $this->getDoctrine()
+                      ->getRepository('ProjectPunchclockPunchclockBundle:Project')
+                      ->findBySlug($slug);
+
+      if( !$project )
+      {
+        throw $this->createNotFoundException('No Project found.');
+      }
+
+      return array(
+        'Project' => $project
+      );
+    }
+
+    /**
+     * @Route("/projects/new", name="punchclock_project_new")
+     * @Template("ProjectPunchclock\PunchclockBundle:Project:new.html.twig")
+     */
+    public function newAction(Request $request)
+    {
+        $project = new Project();
+        $form = $this->createForm( new ProjectType(), $project );
+
+        if ( $request->getMethod() == 'POST' ) {
+            $form->bindRequest( $this->getRequest() );
+            if( $form->isValid() )
+            {
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist( $project );
+                $em->flush();
+
+              return $this->render( 'ProjectPunchclockPunchclockBundle:Project:show.html.twig', array(
+                  'Project_slug' => $project->getSlug()
+              ));
+            }
+        }
+
+        return array(
+          'form' => $form->createView()
+        );
+    }
+}

@@ -1,0 +1,3 @@
+[submodule "vagrant"]
+	path = vagrant
+	url = https://github.com/ner0tic/vagrant-kickstarter.git
