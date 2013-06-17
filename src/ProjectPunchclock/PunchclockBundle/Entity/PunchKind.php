@@ -5,19 +5,19 @@ namespace ProjectPunchclock\PunchclockBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
-use ProjectPunchclock\PunchclockBundle\Traits\PunchTrait;
+use ProjectPunchclock\PunchclockBundle\Traits\PunchKindTrait;
 use ProjectPunchclock\UserBundle\Traits\TimestampableTrait;
 use ProjectPunchclock\UserBundle\Traits\SlugableTrait;
 
 /**
- * ProjectPunchclock\PunchclockBundle\Entity\Punch
+ * ProjectPunchclock\PunchclockBundle\Entity\PunchKind
  *
- * @ORM\Table(name="punch")
- * @ORM\Entity(repositoryClass="ProjectPunchclock\PunchclockBundle\Entity\PunchRepository")
+ * @ORM\Table(name="punch_kind")
+ * @ORM\Entity(repositoryClass="ProjectPunchclock\PunchclockBundle\Entity\PunchKindRepository")
  */
-class Punch
+class PunchKind
 {
-    use PunchTrait;
+    use PunchKindTrait;
     use TimestampableTrait;
     use SlugableTrait;
 }

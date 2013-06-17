@@ -1,0 +1,17 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+  {{ parent() }}
+<link rel="stylesheet" href="{{ asset('projectpunchclockuser/css/form.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+{% endblock %}
+
+{% block fos_user_content %}
+<div class="signup-form-wrapper form-wrapper" id="signup-form">
+<h2>{{ 'sign up' | title }}</h2>
+<br />
+{% include "FOSUserBundle:Registration:register_content.html.twig" %}
+{% endblock %}

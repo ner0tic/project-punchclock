@@ -1,6 +1,6 @@
 <?php
 
-namespace ProjectPunchclock\UserBundle\Controller;
+namespace ProjectPunchclock\ProjectBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

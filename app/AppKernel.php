@@ -19,11 +19,12 @@ class AppKernel extends Kernel
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-            new ProjectPunchclock\PunchclockBundle\ProjectPunchclockPunchclockBundle(),
-            new ProjectPunchclock\UserBundle\ProjectPunchclockUserBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-
+            new ProjectPunchclock\PunchclockBundle\ProjectPunchclockPunchclockBundle(),
+            new ProjectPunchclock\UserBundle\ProjectPunchclockUserBundle(),
+            new ProjectPunchclock\ProjectBundle\ProjectPunchclockProjectBundle(),
+            new ProjectPunchclock\BillingBundle\ProjectPunchclockBillingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

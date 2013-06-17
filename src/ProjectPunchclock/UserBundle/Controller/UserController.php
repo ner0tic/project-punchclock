@@ -27,27 +27,15 @@ class UserController extends Controller
             $security = $this->get('security.context');
 
             if ($security->isGranted('ROLE_ADMIN')) {
-                $this->forwardToDashboard(
-                    $security->isGranted('ROLE_SUPER_ADMIN') ?
-                    'ROLE_SUPER_ADMIN' :
-                    'ROLE_ADMIN'
-                );
+                return $this->render('ProjectPunchclockUserBundle:Dashboard:admin.html.twig');
             } elseif ($security->isGranted('ROLE_DEVELOPER')) {
-                $this->forwardToDashboard(
-                    $security->isGranted('ROLE_DEVELOPER_ADMIN') ?
-                    'ROLE_DEVELOPER_ADMIN' :
-                    'ROLE_DEVELOPER_USER'
-                );
+                return $this->render('ProjectPunchclockUserBundle:Dashboard:developer.html.twig');
             } elseif ($security->isGranted('ROLE_CLIENT')) {
-                $this->forwardToDashboard('ROLE_CLIENT');
-            } else {
-                return array();
+                return $this->render('ProjectPunchclockUserBundle:Dashboard:client.html.twig');
             }
-        } else {
-            return $this->forward('FOSUserBundle:User:login.html.twig');
         }
 
-
+        return $this->render('ProjectPunchclockUserBundle:User:index.html.twig');
     }
 
     public function registerAction()

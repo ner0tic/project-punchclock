@@ -6,8 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
-use Ddnet\PortfolioBundle\Entity\Project;
-use Ddnet\PortfolioBundle\Form\Type\ProjectType;
+use ProjectPunchclock\ProjectBundle\Entity\Project;
+use ProjectPunchclock\PunchclockBundle\Entity\Punch;
+use ProjectPunchclock\PunchclockBundle\Form\Type\PunchFormType;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Exception\NotValidCurrentPageException;
@@ -15,8 +16,8 @@ use Pagerfanta\Exception\NotValidCurrentPageException;
 class PunchController extends Controller
 {
     /**
-     * @Route("/{slug}/punches", name="punchclock_punches_by_project")
-     * @Template("ProjectPunchclock\PunchclockBundle:Punch:list.html.twig")
+     * @Route("/punches", name="ppc_punch_index")
+     * @Template("ProjectPunchclock\PunchclockBundle:Punch:index.html.twig")
      */
     public function indexAction($slug)
     {
@@ -34,27 +35,25 @@ class PunchController extends Controller
         $punches = $query->getResults();
 
 
-        return $this->render(
-            'ProjectPunchclockPunchclockBundle:Punch:list.html.twig',
-            array(
+        return array(
                 'project'   => $project,
                 'punches'   =>  $punches
-            )
         );
     }
 
     /**
-     * @Route("/{slug}/punch", name="punchclock_punches_punch")
+     * @Route("/punch", name="ppc_punch_punch")
      * @Template("ProjectPunchclock\PunchclockBundle:punch:punch.html.twig")
      */
     public function punchAction(Request $request)
     {
+        $user = $this->get('security.context')->getToken();
         $punch = new Punch();
 
-        $form = $this->createForm(new PunchType(), $punch);
+        $form = $this->createForm(new PunchFormType(), $punch);
 
-        if ('POST' == $this->getRequest()->getMethod()) {
-            $form->bindRequest($this->getRequest());
+        if ('POST' == $request->getMethod()) {
+            $form->bindRequest($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($punch);
@@ -62,9 +61,9 @@ class PunchController extends Controller
 
                 return $this->redirect(
                     $this->generateUrl(
-                        'punchclock_punches_by_project',
+                        'ppc_developer_punch_index',
                         array(
-                            'slug' => $punch->getProject()->getSlug()
+                            'slug' => $user->getSlug()
                         )
                     )
                 );

@@ -1,3 +1,13 @@
+project_punchclock_billing:
+    resource: "@ProjectPunchclockBillingBundle/Controller/"
+    type:     annotation
+    prefix:   /billings
+
+project_punchclock_project:
+    resource: "@ProjectPunchclockProjectBundle/Controller/"
+    type:     annotation
+    prefix:   /projects
+
 project_punchclock_user:
     resource: "@ProjectPunchclockUserBundle/Controller/"
     type:     annotation
@@ -17,7 +27,7 @@ fos_user_profile:
 
 fos_user_register:
     resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
-    prefix: /register
+    prefix: /signup
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
@@ -26,3 +36,7 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+
+homepage:
+    defaults: { _controller: ProjectPunchclockPunchclockBundle:Punch:punch }
+    path: /

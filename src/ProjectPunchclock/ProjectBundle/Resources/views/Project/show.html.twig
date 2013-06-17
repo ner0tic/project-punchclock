@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('/bundles/projectpunchclockuser/css/Base/show.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/bundles/projectpunchclockproject/css/project.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<div class="fluid-row">
+    <div class="left-pane span6" id="project-img-pane">
+        <a href="#">
+            <img src="{{ asset('/bundles/projectpunchclockproject/img/' ~ project.slug) }}" />
+        </a>
+    </div>
+    <div class="right-pane span6" id="project-info-pane">
+        <h1>{{ project.name | title }}</h1>
+        <h2>
+            {{ 'category:' | title }}
+            <a href="#" class="dropdown">{{ project.category | title }}</a>
+            <ul id="category-items">
+            {% for category in project.categories %}
+                {% if category != project.category %}
+                <li class="category-item">
+                    <a href="#">{{ category }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        </h2>
+    </div>
+    <div class="left-pane span6" id="project-punches-pane">
+        <h1>{{ 'punches' | title }}</h1>
+        {% include 'ProjectPunchclockUserBundle::datatable.html.twig' with { 'items': project.punches, 'limit': 5 } %}
+    </div>
+    <div class="right-pane span6" id="project-commits-pane">
+        <h1>{{ 'commits' | title }}</h1>
+        {% include 'ProjectPunchclockUserBundle::datatable.html.twig' with { 'items': project.commits, 'limit': 5 } %}
+    </div>
+</div>
+{% endblock %}

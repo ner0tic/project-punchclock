@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('/bundles/projectpunchclockuser/css/Base/index.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/bundles/projectpunchclockproject/css/category.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<div class="fluid-row">
+    <div class="span12">
+        <h1>{{ 'categories' | title }}</h1>
+        {% include 'ProjectPunchclockUserBundle::datatable.html.twig' with { 'items': categories } %}
+    </div>
+</div>
+{% endblock %}

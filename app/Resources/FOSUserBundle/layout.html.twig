@@ -1,0 +1,23 @@
+{# app/Resources/FOSUserBundle/views/layout.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+{% endblock %}
+
+{% block page_class %}{% endblock %}
+
+{% block main_content %}
+<div class="box main-content">
+  <div class="box-content datagrid">
+    <div>
+    {% for key, message in app.session.getFlashes() %}
+      <div class="{{ key }}">
+        {{ message|trans({}, 'FOSUserBundle') }}
+      </div>
+    {% endfor %}
+    {%block fos_user_content %}{% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('/bundles/projectpunchclockuser/css/Base/show.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/bundles/projectpunchclockpunch/css/punch.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}

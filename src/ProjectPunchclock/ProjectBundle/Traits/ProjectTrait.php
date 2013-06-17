@@ -1,5 +1,5 @@
 <?php
-namespace ProjectPunchclock\PunchclockBundle\Traits;
+namespace ProjectPunchclock\ProjectBundle\Traits;
 
 trait ProjectTrait
 {

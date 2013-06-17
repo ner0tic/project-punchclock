@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('/bundles/projectpunchclockuser/css/Base/new.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/bundles/projectpunchclockpunch/css/punch.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<div id="form-container">
+    <fieldset>
+        <h2>{{ 'punch the clock' | title }}</h2>
+        <form action="{{ path( 'ppc_punch_punch' ) }}" method="post" {{ form_enctype( form ) }}>
+        {% block form %}
+        <div id="form-errors" class="hidden">
+            {{ form_errors( form ) }}
+        </div>
+        <div class="row-fluid">
+            <div id="left-pane">
+                <div class="slider">
+                    {{ form_row( form.name ) }}
+                </div>
+                <div class="slider">
+                    {{ form_row( form.punch_kind ) }}
+                </div>
+            </div>
+            <div class="right-pane">
+                <div class="slider">
+                    {{ form_rest(form) }}
+                </div>
+            </div>
+            <div class="slider">
+                <button class="btn btn-primary btn-block" name="submit">{{ 'add' | title }}</button>
+            </div>
+        </div>
+        {% endblock %}
+        </form>
+    </fieldset>
+</div>
+{% endblock %}

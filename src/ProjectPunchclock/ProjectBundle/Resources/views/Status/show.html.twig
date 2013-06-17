@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('/bundles/projectpunchclockuser/css/Base/show.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/bundles/projectpunchclockproject/css/status.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<div class="fluid-row">
+    <h1>{{ status.name | title }}</h1>
+    <p>{{ status.description }}</p>
+    {% if status.parent exists %}
+    <p>{{ status.parent }}</p>
+</div>
+{% endblock %}
